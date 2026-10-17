@@ -97,9 +97,16 @@ def t_multiple_findings_sorted():
     assert md.index("CRITICAL") < md.index("LOW"), md
 
 
-for name, fn in sorted([(k, v) for k, v in globals().items()
-                        if k.startswith("t_")]):
-    check(name, fn)
+def test_all_checks():
+    """pytest entry point: runs every t_* check."""
+    for name, fn in sorted([(k, v) for k, v in globals().items()
+                            if k.startswith("t_")]):
+        fn()
 
-print("\n%d passed, %d failed" % (len(PASS), len(FAIL)))
-sys.exit(1 if FAIL else 0)
+
+if __name__ == "__main__":
+    for name, fn in sorted([(k, v) for k, v in globals().items()
+                            if k.startswith("t_")]):
+        check(name, fn)
+    print("\n%d passed, %d failed" % (len(PASS), len(FAIL)))
+    sys.exit(1 if FAIL else 0)
