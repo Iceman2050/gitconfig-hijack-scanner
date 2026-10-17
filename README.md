@@ -1,5 +1,20 @@
 # gitconfig-hijack-scanner
 
+
+## ⚡ GitHub Action
+
+Run it in CI — fails the build on findings at or above your threshold:
+
+```yaml
+- uses: actions/checkout@v4
+- uses: Iceman2050/gitconfig-hijack-scanner@v1
+      with:
+        target: '.'
+        fail-on: 'CRITICAL,HIGH' # default
+```
+
+Full input reference: [`action.yml`](./action.yml).
+
 **Your agent inherits your git config. Audit the hijack-grade keys before it does something with them.**
 
 Git configuration is a persistence and execution vector hiding in plain sight. An October 2026 security report found **git configuration hijacking** among eight vulnerabilities across seven AI coding agents — agents that clone, init, or operate on repos inherit whatever the repo's `.git/config` (or your global config) tells them to do. `core.hooksPath` alone turns a repo clone into arbitrary code execution.
